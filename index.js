@@ -6,6 +6,7 @@ const typeDefs = gql`
       numberOfAnimals: Int
       price: Float
       isCool: Boolean
+      list: [String]
   }
 `
 
@@ -22,6 +23,9 @@ const resolvers = {
     },
     isCool: () => {
       return false
+    },
+    list: () => {
+      return ['Hello', 'my', 'good friend'];
     }
   }
 }
