@@ -84,24 +84,47 @@ const products = [
   },
 ];
 
+const categories = [
+  {
+    id: "c01b1ff4-f894-4ef2-b27a-22aacc2fca70",
+    name: "Kitchen",
+  },
+  {
+    id: "34115aac-0ff5-4859-8f43-10e8db23602b",
+    name: "Garden",
+  },
+  {
+    id: "d914aec0-25b2-4103-9ed8-225d39018d1d",
+    name: "Sports",
+  },
+];
+
 const typeDefs = gql`
   type Query {
-      hello: String
-      numberOfAnimals: Int
-      price: Float
-      isCool: Boolean
-      list: [String]
-      products: [Product!]!
-      product(id: ID!): Product
+    hello: String
+    # numberOfAnimals: Int
+    # price: Float
+    # isCool: Boolean
+    # list: [String]
+    products: [Product!]!
+    product(id: ID!): Product
+    categories: [Category!]!
+    category(id: ID!): Category
   }
 
   type Product {
+    id: ID!
     name: String!
     description: String!
     image: String!
     quantity: Int!
     price: Float!
     onSale: Boolean!
+  }
+
+  type Category {
+    id: ID!
+    name: String!
   }
 `
 
@@ -110,26 +133,29 @@ const resolvers = {
     hello: () => {
         return "World!";
     },
-    numberOfAnimals: () => {
-      return 55;
-    },
-    price: () => {
-      return 23.09
-    },
-    isCool: () => {
-      return false
-    },
-    list: () => {
-      return ['Hello', 'my', 'good friend'];
-    },
+    // numberOfAnimals: () => {
+    //   return 55;
+    // },
+    // price: () => {
+    //   return 23.09
+    // },
+    // isCool: () => {
+    //   return false
+    // },
+    // list: () => {
+    //   return ['Hello', 'my', 'good friend'];
+    // },
     products: () => {
       return products
     },
     product: (parent, args, context) => {
       const productId = args.id;
-      const product = products.find(product => product.id === productId);
-      if(!product) return null;
-      return product;
+      return products.find(product => product.id === productId);
+    },
+    categories: (parent, args, context) => categories,
+    category: (parent, args, context) => {
+      const { id } = args;
+      return categories.find(category => category.id === id);
     }
   }
 }
