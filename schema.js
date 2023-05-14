@@ -7,7 +7,7 @@ exports.typeDefs = gql`
     # price: Float
     # isCool: Boolean
     # list: [String]
-    products: [Product!]!
+    products(filter: ProuductsFilterInput): [Product!]!
     product(id: ID!): Product
     categories: [Category!]!
     category(id: ID!): Category
@@ -28,7 +28,7 @@ exports.typeDefs = gql`
   type Category {
     id: ID!
     name: String!
-    products: [Product!]!
+    products(filter: ProuductsFilterInput): [Product!]!
   }
 
   type Review {
@@ -37,5 +37,9 @@ exports.typeDefs = gql`
     title: String!
     comment: String!
     rating: Int!
+  }
+
+  input ProuductsFilterInput {
+    onSale: Boolean
   }
 `
